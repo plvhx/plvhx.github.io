@@ -18,7 +18,7 @@ int main(void)
 	execve(args[0], args, envp);
 
 	// what we want is to reach here.
-	*foo[0] = 'A';
+	foo[0] = 'A';
 
 	return 0;
 }
@@ -65,7 +65,7 @@ int main(void)
 
 	// exit /bin/sh, and you'll get the
 	// segmentation fault.
-	*foo[0] = 'A';
+	foo[0] = 'A';
 
 	return 0;
 
