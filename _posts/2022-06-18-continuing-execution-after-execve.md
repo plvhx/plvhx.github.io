@@ -35,6 +35,7 @@ In my opinion, strictly speaking, to solve this kind of mess is to wrap execve()
 - profit :)
 
 ```C
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -44,13 +45,14 @@ int main(void)
 	char *args[] = {"/bin/sh", NULL};
 	char *envp[] = {NULL};
 	char *foo = (char *)0x31337;
-	int wstatus;
+	int ret, wstatus;
 	pid_t pid;
 
 	pid = fork();
 
 	if (pid < 0) {
 		perror("fork");
+		ret = pid;
 		goto __fallback;
 	}
 
@@ -66,6 +68,9 @@ int main(void)
 	*foo[0] = 'A';
 
 	return 0;
+
+__fallback:
+	return ret;
 }
 ```
 
